@@ -1,13 +1,15 @@
 from rest_framework import viewsets
-from .models import New
-from .serializers import NewSerializer
+from .models import News
+from .serializers import NewsShortSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
-
+from .paginations import NewsPagination
+from comments.serializers import CommentSerializer
 
 class NewsViewSet(viewsets.ModelViewSet):
-    queryset = New.objects.all()
-    serializer_class = NewSerializer
+    queryset = News.objects.all()
+    serializer_class = NewsShortSerializer
+    pagination_class = NewsPagination
 
     @action(detail=True, methods=['post'])
     def publish(self, request, pk=None):

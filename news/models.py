@@ -4,13 +4,13 @@ from tags.models import Tag
 from django.utils.text import slugify
 
 
-class New(models.Model):
+class News(models.Model):
     STATUS_CHOICES = [
         ('draft', 'Draft'),
         ('published', 'Published')
     ]
     title = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, blank=True)
     content = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='posts')
     tags = models.ManyToManyField(Tag, related_name='posts')
@@ -19,7 +19,11 @@ class New(models.Model):
     is_published = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super(News, self).save(*args, **kwargs)
 
 
     def __str__(self):

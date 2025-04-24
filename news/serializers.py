@@ -1,8 +1,10 @@
 from rest_framework import serializers
-from .models import New
+from .models import News
+'''from categories.serializers import CategorySerializer
+from tags.serializers import TagSerializer'''
 
 
-class NewSerializer(serializers.ModelSerializer):
+class NewsShortSerializer(serializers.ModelSerializer):
     class Meta:
-        model = New
-        fields = ['id', 'title', 'content', 'category', 'tags', 'image', 'is_published']
+        model = News
+        fields = ['id', 'title', 'slug']

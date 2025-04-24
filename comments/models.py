@@ -1,9 +1,9 @@
 from django.db import models
-from news.models import New
+from news.models import News
 
 
 class Comment(models.Model):
-    news = models.ForeignKey(New, on_delete=models.SET_NULL, null=True, related_name='comments')
+    news = models.ForeignKey(News, on_delete=models.SET_NULL, null=True, related_name='comments')
     author_name = models.CharField(max_length=50)
     author_email = models.EmailField(unique=True)
     content = models.TextField()

@@ -5,7 +5,7 @@ from .models import Category
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['id', 'name', 'desc']
+        fields = ['id', 'name', 'slug', 'description', 'created_at']
 
     def create(self, validated_data):
         validated_data['slug'] = validated_data['name'].lower().replace(' ', '-')
